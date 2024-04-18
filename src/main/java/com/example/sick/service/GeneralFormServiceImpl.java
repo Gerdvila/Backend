@@ -50,14 +50,30 @@ public class GeneralFormServiceImpl implements GeneralFormService {
     StatusRepository statusRepository;
     EmailService emailService;
 
-
     public GeneralFormServiceImpl(LeaseAndRatesRepository leaseAndRatesRepository, PersonalInformationRepository personalInformationRepository, EmailService emailService, StatusRepository statusRepository) {
         this.leaseAndRatesRepository = leaseAndRatesRepository;
         this.personalInformationRepository = personalInformationRepository;
         this.emailService = emailService;
         this.statusRepository = statusRepository;
     }
-    @Override
+
+
+    public List<GeneralFormsResponse> selectAllApplications() {
+
+        List<LeaseAndRatesDAOResponse> leaseAndRatesDAOResponses = leaseAndRatesRepository.getAllLeaseAndRates();
+        List<PersonalInformationDAOResponse> personalInformationDAOResponses = personalInformationRepository.getAllPersonalInformation();
+        List<StatusDAOResponse> statusDaoResponses = statusRepository.getAllStatus();
+        return leaseAndRatesDAOResponses.stream()
+                .map(leaseAndRatesDAOResponse -> new GeneralFormsResponse(
+                        convertDAOResponseIntoRatesResponse(leaseAndRatesDAOResponse),
+                        convertDAOResponseIntoPersonalInformationResponse(personalInformationDAOResponses
+                                .get(leaseAndRatesDAOResponses.indexOf(leaseAndRatesDAOResponse))),
+                        convertDAOResponseIntoLeaseResponse(leaseAndRatesDAOResponse),
+                        convertDAOResponseIntoStatusResponse(statusDaoResponses
+                                .get(leaseAndRatesDAOResponses.indexOf(leaseAndRatesDAOResponse))))).toList();
+
+    }
+
     public List<GeneralFormsResponse> selectAllApplicationsByPage(long id) {
 
         List<LeaseAndRatesDAOResponse> leaseAndRatesDAOResponses = leaseAndRatesRepository.getAllLeaseAndRatesByPage(id);
@@ -73,7 +89,7 @@ public class GeneralFormServiceImpl implements GeneralFormService {
                                 .get(leaseAndRatesDAOResponses.indexOf(leaseAndRatesDAOResponse))))).toList();
 
     }
-    @Override
+
     public GeneralFormsResponse getApplicationById(long id) throws ApplicationNotFoundException {
 
         Optional<LeaseAndRatesDAOResponse> leaseAndRatesDAOResponse = leaseAndRatesRepository.getLeaseAndRateById(id);
@@ -92,7 +108,7 @@ public class GeneralFormServiceImpl implements GeneralFormService {
         throw new ApplicationNotFoundException(id);
 
     }
-    @Override
+
     public void createApplication(GeneralFormsRequest generalFormsRequest) {
 
 

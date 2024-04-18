@@ -1,10 +1,5 @@
 package com.example.sick.service;
 
-import com.example.sick.api.model.request.MailRequest;
-import com.example.sick.api.model.response.MailResponse;
-import com.example.sick.domain.MailDAORequest;
-import com.example.sick.domain.MailDAOResponse;
-import com.example.sick.repository.MailRepository;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -19,7 +14,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Session;
@@ -29,7 +23,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -37,15 +30,12 @@ import static com.google.api.services.gmail.GmailScopes.GMAIL_SEND;
 import static javax.mail.Message.RecipientType.TO;
 
 @Service
-public class EmailService implements EmailServiceInterface {
+public class EmailService {
 
     private static final String TEST_EMAIL = "tlizingas@gmail.com";
     private final Gmail service;
-    MailRepository mailRepository;
 
-    @Autowired
-    public EmailService(MailRepository mailRepository) throws Exception {
-        this.mailRepository = mailRepository;
+    public EmailService() throws Exception {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
@@ -97,31 +87,6 @@ public class EmailService implements EmailServiceInterface {
         }
     }
 
-
-    public void saveMailHistory(MailRequest mailRequest){
-        if (mailRequest == null || mailRequest.mailText() == null || mailRequest.mailText().isEmpty()) {
-            throw new IllegalArgumentException("Mail request must not be null");
-        }
-            mailRepository.createMail(convertMailRequestIntoMailDAORequest(mailRequest));
+    public static void main(String[] args) {
     }
-
-    public List<MailResponse> getMailByApplicationId(long applicationId){
-        return mailRepository.selectMailByApplicationId(applicationId).stream()
-                .map(this::convertMailDAOResponseIntoMailResponse)
-                .toList();
-    }
-
-    private MailDAORequest convertMailRequestIntoMailDAORequest(MailRequest mailRequest) {
-        return new MailDAORequest(
-                mailRequest.applicationId(),
-                mailRequest.mailText()
-        );
-    }
-
-    private MailResponse convertMailDAOResponseIntoMailResponse(MailDAOResponse mail) {
-        return new MailResponse(
-                mail.mailText()
-        );
-    }
-
 }
