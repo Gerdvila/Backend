@@ -1,7 +1,7 @@
 package com.example.sick.domain;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public record PersonalInformationDAORequest(
 
@@ -10,7 +10,7 @@ public record PersonalInformationDAORequest(
     String email,
     String phoneNumber,
     String pid,
-    LocalDateTime dateOfBirth,
+    Date dateOfBirth,
     String maritalStatus,
     int numberOfChildren,
     String citizenship,

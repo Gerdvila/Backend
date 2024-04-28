@@ -1,7 +1,7 @@
 package com.example.sick.api.model.response;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public record PersonalInformationResponse(
 
@@ -11,7 +11,7 @@ public record PersonalInformationResponse(
         String email,
         String phoneNumber,
         String pid,
-        LocalDateTime dateOfBirth,
+        Date dateOfBirth,
         String maritalStatus,
         int numberOfChildren,
         String citizenship,

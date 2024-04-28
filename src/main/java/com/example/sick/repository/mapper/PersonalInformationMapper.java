@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class PersonalInformationMapper implements RowMapper<PersonalInformationDAOResponse> {
     @Override
@@ -18,7 +17,7 @@ public class PersonalInformationMapper implements RowMapper<PersonalInformationD
                 resultSet.getString("email"),
                 resultSet.getString("phoneNumber"),
                 resultSet.getString("pid"),
-                resultSet.getObject("dateOfBirth", LocalDateTime.class),
+                resultSet.getDate("dateOfBirth"),
                 resultSet.getString("maritalStatus"),
                 resultSet.getInt("numberOfChildren"),
                 resultSet.getString("citizenship"),

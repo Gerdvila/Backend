@@ -47,8 +47,7 @@ public class StatusServiceImpl implements StatusService {
                 statusDAOResponse.APPLICATIONSTATUS(),
                 statusDAOResponse.isOpened(),
                 statusDAOResponse.updatedAt(),
-                statusDAOResponse.createdAt(),
-                statusDAOResponse.isHighRisk()
+                statusDAOResponse.createdAt()
         );
     }
 }

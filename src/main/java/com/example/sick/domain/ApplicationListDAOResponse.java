@@ -2,7 +2,7 @@ package com.example.sick.domain;
 
 import com.example.sick.utils.ApplicationStatus;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public record ApplicationListDAOResponse (
     long id,
@@ -10,7 +10,6 @@ public record ApplicationListDAOResponse (
     String lastName,
     boolean isOpened,
     ApplicationStatus status,
-    LocalDateTime updatedAt,
-    boolean isHighRisk
+    Timestamp updatedAt
 )
 {}

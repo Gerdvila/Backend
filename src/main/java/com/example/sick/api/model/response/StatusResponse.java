@@ -3,7 +3,7 @@ package com.example.sick.api.model.response;
 
 import com.example.sick.utils.ApplicationStatus;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 
 public record StatusResponse(
@@ -13,10 +13,8 @@ public record StatusResponse(
 
         Boolean isOpened,
 
-        LocalDateTime updatedAt,
+        Timestamp updatedAt,
 
-        LocalDateTime createdAt,
-
-        Boolean isHighRisk
+        Timestamp createdAt
 ) {
 }
