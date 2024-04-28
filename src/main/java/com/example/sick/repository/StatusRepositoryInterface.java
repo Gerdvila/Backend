@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StatusRepositoryInterface {
-    void updateStatusRead(StatusRequest statusRequest, boolean isOpened);
+    void updateStatusRead(long read, boolean isOpened);
 
     void createStatus(long id, boolean isHighRisk);
 

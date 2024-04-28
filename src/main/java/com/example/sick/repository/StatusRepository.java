@@ -89,7 +89,7 @@ public class StatusRepository implements StatusRepositoryInterface {
     }
 
     @Override
-    public void updateStatusRead(StatusRequest statusRequest, boolean isOpened) {
+    public void updateStatusRead(long id, boolean isOpened) {
         String query = """
                 UPDATE STATUS
                 SET isOpened = :isOpened
@@ -97,7 +97,7 @@ public class StatusRepository implements StatusRepositoryInterface {
                 """;
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("isOpened", isOpened)
-                .addValue("id", statusRequest.id());
+                .addValue("id", id);
         namedParameterJdbcTemplate.update(query, params);
     }
 
