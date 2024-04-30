@@ -26,6 +26,7 @@ public class NoteAndEmailService {
         return noteRepo.selectNotesById(id);
     }
 
+
     public List<MailDAOResponse> getMailById(long id) {
         return mailRepo.selectMailByApplicationId(id);
     }
@@ -47,14 +48,14 @@ public class NoteAndEmailService {
         return new MailsAndNotesResponse(id, combinedNotesResponses, combinedMailsResponses);
     }
 
-    private NotesTextResponse convertDAOResponseIntoNoteResponseList(NoteDAOResponse noteDAOResponse) {
+    public NotesTextResponse convertDAOResponseIntoNoteResponseList(NoteDAOResponse noteDAOResponse) {
         return new NotesTextResponse(
                 noteDAOResponse.noteText(),
                 noteDAOResponse.createdAt()
         );
     }
 
-    private MailTextResponse convertDAOResponseIntoMailResponseList(MailDAOResponse mailDAOResponse) {
+    public MailTextResponse convertDAOResponseIntoMailResponseList(MailDAOResponse mailDAOResponse) {
         return new MailTextResponse(
                 mailDAOResponse.mailText(),
                 mailDAOResponse.createdAt()
