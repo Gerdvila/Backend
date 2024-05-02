@@ -22,27 +22,6 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @GetMapping("/email/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public String sendEmail(@PathVariable String email) {
-        try {
-            emailService.sendMail(email, "TLizingas Loan", """
-                    Hey there!,
-
-                    Thank you for using the TLizingas loan calculator!
-                    We've successfully received your application.
-
-                    TLizingas staff will get in touch with you shortly!
-
-                    Have a great day!
-                    TLizingas Team
-                    """);
-            return "Email sent successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Failed to send email: " + e.getMessage();
-        }
-    }
 
     @PostMapping("/mail/create")
     @ResponseStatus(HttpStatus.CREATED)
